@@ -1,5 +1,5 @@
-# PicoSDK4nim
-This is library to write Nim code for Raspberry Pi Pico and wraps [Raspberry Pi Pico SDK](https://github.com/raspberrypi/pico-sdk).
+# PicoSDK4Nim
+This is a library to write [Nim](https://nim-lang.org) code for Raspberry Pi Pico and wraps [Raspberry Pi Pico SDK](https://github.com/raspberrypi/pico-sdk).
 
 ## There is already Raspberry Pi Pico SDK for Nim. Why created another tool?
 By using this library with [hidecmakelinker](https://github.com/demotomohiro/hidecmakelinker) and write `config.nims`, you can build your code with `nim c blink.nim` and it doesn't require nimble.
@@ -8,8 +8,8 @@ You can wrap C libraries related to Raspberry Pi Pico on Nim module and use it w
 ## Requirements
 - Nim 2.0.0
 - [hidecmakelinker](https://github.com/demotomohiro/hidecmakelinker)
-    - pathX
     - CMake 3.13 or newer
+- [pathX](https://github.com/demotomohiro/pathX)
 - Raspberry Pi Pico SDK
 ```console
 git clone https://github.com/raspberrypi/pico-sdk.git --branch master --depth 1 --recurse-submodules --shallow-submodules
@@ -21,6 +21,16 @@ git clone https://github.com/raspberrypi/pico-sdk.git --branch master --depth 1 
     - Build OpenOCD if you want to use Picoprobe or Raspberry Pi Debug Probe
 
 ## How to install
+Before installing picosdk4nim, make sure that build tools, CMake and Raspberry Pi Pico SDK are installed, and you can build example C code with `CMakeLists.txt` in https://github.com/raspberrypi/pico-sdk/blob/master/README.md
+
+Install using nimble:
+```console
+$ nimble install https://github.com/demotomohiro/picosdk4nim
+```
+or install pathX and hidecmakelinker, and clone the project and set Nim import path so that you can import modules in `src` directory:
+```console
+$ git clone https://github.com/demotomohiro/picosdk4nim.git
+```
 
 ## How to use
 Create `config.nims` with following content:
