@@ -39,3 +39,5 @@ const cmakeStmts = block:
   res
 
 initLibParams(cmakeStmts = cmakeStmts).config()
+
+{.used.}

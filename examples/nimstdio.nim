@@ -1,6 +1,6 @@
 import std/strutils
 import picosdk4nim
-import picosdk4nim/[stdio, time]
+import picosdk4nim/[stdio]
 import hidecmakelinkerpkg/libconf
 
 writeHideCMakeToFile()
@@ -54,4 +54,3 @@ while true:
       numStack.add n
     except ValueError:
       echo "Write integer or +/-"
-  #sleep(1000)
