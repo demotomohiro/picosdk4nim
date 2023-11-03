@@ -105,9 +105,9 @@ You don't need to connect and disconnect Pico to USB port everytime you load upd
 1. Wire Picoprobe to another Pico (Read Appedix A again)
 1. Set environment variable `OPENOCD_PATH` to OpenOCD directory so that `$OPENOCD_PATH/src/openocd` refers `openocd` executable
 1. Run following command (replace `blink.elf` to your `*.elf` file name):
-```console
-$ $OPENOCD_PATH/src/openocd -s $OPENOCD_PATH/tcl -f interface/cmsis-dap.cfg -c "adapter speed 5000" -f target/rp2040.cfg -c "program blink.elf verify reset exit"
-```
+   ```console
+   $ $OPENOCD_PATH/src/openocd -s $OPENOCD_PATH/tcl -f interface/cmsis-dap.cfg -c "adapter speed 5000" -f target/rp2040.cfg -c "program blink.elf verify reset exit"
+   ```
 
 ### Loading .elf file to Pico using Picoprobe without writing to flash memory
 Requires Picoprobe, OpenOCD and GDB.
@@ -119,27 +119,28 @@ Loaded program will be lost when Pico lost power or reset.
 1. Wire Picoprobe to another Pico (Read Appedix A again)
 1. Set environment variable `OPENOCD_PATH` to OpenOCD directory so that `$OPENOCD_PATH/src/openocd` refers `openocd` executable
 1. Run following command:
-```console
-$ $OPENOCD_PATH/src/openocd -s $OPENOCD_PATH/tcl -f interface/cmsis-dap.cfg -c "adapter speed 5000" -f target/rp2040.cfg
-```
+   ```console
+   $ $OPENOCD_PATH/src/openocd -s $OPENOCD_PATH/tcl -f interface/cmsis-dap.cfg -c "adapter speed 5000" -f target/rp2040.cfg
+   ```
 1. Open another terminal and run following command (replace `blink.elf` to your `*.elf` file name):
-```console
-$ gdb-multiarch blink.elf
-```
-If you use Gentoo Linux:
-```console
-$ arm-none-eabi-gdb blink.elf
-```
+   ```console
+   $ gdb-multiarch blink.elf
+   ```
+   If you use Gentoo Linux:
+   ```console
+   $ arm-none-eabi-gdb blink.elf
+   ```
 1. Connect to OpenOCD on GDB
-```console
-(gdb) target extended-remote localhost:3333
-```
+   ```console
+   (gdb) target extended-remote localhost:3333
+   ```
 1. Run following commands on GDB
-```console
-(gdb) monitor reset init
-(gdb) load
-(gdb) continue
-```
+   ```console
+   (gdb) monitor reset init
+   (gdb) load
+   (gdb) continue
+   ```
+
 When you change your code and build a new program, press 'c' key with ctrl key on GDB and run following commands again
 ```console
 (gdb) monitor reset init
