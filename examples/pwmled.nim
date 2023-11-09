@@ -16,6 +16,14 @@ var
   mode: range[0 .. 2] # 0: linear. 1: exponential, Fechner's law. 2: squared, Stevens' power law.
   absTime = getTime()
 while true:
+  if c == 255:
+    c = 0
+    if mode == 2:
+      mode = 0
+    else:
+      inc mode
+  else:
+    inc c
   let power = case mode:
               of 0:
                 c.uint16 * 255
@@ -23,13 +31,5 @@ while true:
                 pow(pow(float(255 * 255), 1/255), c.float).uint16
               of 2:
                 c.uint16 * c.uint16
-  sliceNum.setChanLevel B, power
-  if c == 255:
-    if mode == 2:
-      mode = 0
-    else:
-      inc mode
-    c = 0
-  else:
-    inc c
   sleep(20)
+  sliceNum.setChanLevel B, power
