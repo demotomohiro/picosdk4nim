@@ -38,6 +38,3 @@ proc usbConnected*: bool {.importC: "stdio_usb_connected".}
 proc blockUntilUsbConnected*() =
   ## Blocks until the usb is connected, useful if reliant on USB interface.
   while not usbConnected(): discard
-
-proc defaultTxWaitBlocking*(){.importC: "uart_default_tx_wait_blocking", header: "hardware/uart.h".}
-  ## Wait for the default UART'S TX fifo to be drained. 

@@ -23,5 +23,7 @@ proc uartPutC*(uart: ptr UartInst; c: cchar) {.importc: "uart_putc".}
 proc uartPutCRaw*(uart: ptr UartInst; c: cchar) {.importc: "uart_putc_raw".}
 proc uartPuts*(uart: ptr UartInst; s: cstring) {.importc: "uart_puts".}
 proc uartReadBlocking*(uart: ptr UartInst; dst: uint8; len: csize_t) {.importc: "uart_read_blocking".}
+proc uartDefaultTxWaitBlocking*(){.importC: "uart_default_tx_wait_blocking".}
+  ## Wait for the default UART'S TX fifo to be drained.
 
 {.pop.}
