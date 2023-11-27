@@ -1,5 +1,4 @@
 import hidecmakelinkerpkg/libconf
-import system/ansi_c
 
 initLibParams(linkLibraries = ["pico_stdlib"]).config()
 
