@@ -12,13 +12,13 @@ static: doAssert PicoBinaryType in ["", "default", "no_flash", "copy_to_ram", "b
 
 when defined(PicoEnableStdioUsb):
   const PicoEnableStdioUsb {.booldefine.} = false
-    ## Enable reading from stdout and writing to stdin through UART.
-    ## Enabled in default.
+    ## Enable reading from stdout and writing to stdin through USB CDC.
+    ## Disabled in default.
 
 when defined(PicoEnableStdioUart):
   const PicoEnableStdioUart {.booldefine.} = false
-    ## Enable reading from stdout and writing to stdin through USB CDC.
-    ## Disabled in default.
+    ## Enable reading from stdout and writing to stdin through UART.
+    ## Enabled in default.
 
 const cmakeStmts = block:
   var res = @[initCMakeInclude($(PicoSDKPath.PathX[:fdDire, arAbso, BuildOS, true].joinFile"pico_sdk_init.cmake"), "includePicoSDK"),
