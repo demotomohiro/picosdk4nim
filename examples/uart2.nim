@@ -4,13 +4,13 @@ import hidecmakelinkerpkg/libconf
 
 writeHideCMakeToFile()
 
-uartInit(uart0, 115200)
+uart0.init(115200)
 setFunction(0.Gpio, UART)
 setFunction(1.Gpio, UART)
 
 while true:
-  if uart0.uartIsReadableWithinUS(3_000_000):
-    let c = uart0.uartGetC
-    uart0.uartPutC(c)
+  if uart0.isReadableWithinUS(3_000_000):
+    let c = uart0.getc
+    uart0.putc(c)
   else:
-    uart0.uartPuts("\n\rNo input for 3 seconds\n\r")
+    uart0.puts("\n\rNo input for 3 seconds\n\r")
