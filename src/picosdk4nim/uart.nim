@@ -9,7 +9,7 @@ type
 
 let
   uart0* {.importc: "uart0".}: ptr UartInst
-  uart1* {.importc: "uart0".}: ptr UartInst
+  uart1* {.importc: "uart1".}: ptr UartInst
 
 proc uartDeinit*(uart: ptr UartInst) {.importc: "uart_deinit".}
 proc uartGetIndex*(uart: ptr UartInst): cuint {.importc: "uart_get_index".}
