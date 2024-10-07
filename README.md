@@ -18,9 +18,11 @@ git clone https://github.com/raspberrypi/pico-sdk.git --branch master --depth 1 
 ```
 - Build tools required by Raspberry Pi Pico SDK
     - For more details: https://github.com/raspberrypi/pico-sdk
-        - Read "Getting Started with the Raspberry Pi Pico"
+        - Read [Getting Started with the Raspberry Pi Pico-Series](https://rptl.io/pico-get-started)
         - If you are Gentoo Linux user: https://wiki.gentoo.org/wiki/Crossdev
-    - Build OpenOCD if you want to use Picoprobe or Raspberry Pi Debug Probe
+          - Install binutils, gcc, new and gdb targets arm-none-eabi
+    - Build or install [OpenOCD](https://github.com/raspberrypi/openocd) if you want to use Picoprobe or Raspberry Pi Debug Probe
+        - Read Appendix A: Debugprobe in [Getting Started with the Raspberry Pi Pico-Series](https://rptl.io/pico-get-started)
 
 
 ## How to install
@@ -85,7 +87,7 @@ You can put `-d:PicoSDKPath=/path/to/pico-sdk/` option as `switch("define", "/pa
 
 ## How to load and run a program on Raspberry Pi Pico
 There several ways to loading a program to Pico to run and they are not different from programs compiled from C.
-See "Getting Started with the Raspberry Pi Pico" in [Raspberry Pi Pico SDK](https://github.com/raspberrypi/pico-sdk) for more details.
+See ["Getting Started with the Raspberry Pi Pico-Series"](https://rptl.io/pico-get-started) in [Raspberry Pi Pico SDK](https://github.com/raspberrypi/pico-sdk) for more details.
 ### Mount Pico as USB Mass Storage Device and copy .uf2 file
 1. Build your code with `PicoAddExtraOutput` so that `*.uf2` file is generated
 1. Make sure Pico is disconnect from USB or other power source
@@ -100,8 +102,8 @@ Use another Pico as "Picoprobe" and wire it to main Pico.
 Use OpenOCD on your PC to load a program to Pico.
 You don't need to connect and disconnect Pico to USB port everytime you load updated program.
 1. Build your code so that `*.elf` file is generated
-1. Build OpenOCD (Read "Appendix A: Using Picoprobe" in "Getting started with Raspberry Pi Pico")
-1. Build and flash picoprobe (Read Appedix A again)
+1. Build or install OpenOCD (Read "Appendix A: Debugprobe" in [Getting Started with the Raspberry Pi Pico-Series](https://rptl.io/pico-get-started))
+1. If you use a second Pico or Pico 2 instead of Debug Probe, install picoprobe (Read Appedix A again) to it
 1. Wire Picoprobe to another Pico (Read Appedix A again)
 1. Set environment variable `OPENOCD_PATH` to OpenOCD directory so that `$OPENOCD_PATH/src/openocd` refers `openocd` executable
 1. Run following command (replace `blink.elf` to your `*.elf` file name):
@@ -113,9 +115,9 @@ You don't need to connect and disconnect Pico to USB port everytime you load upd
 Requires Picoprobe, OpenOCD and GDB.
 Loaded program will be lost when Pico lost power or reset.
 1. Build your code with `-d:PicoBinaryType=no_flash`
-1. Install GDB (Read "Chapter 6. Debugging with SWD" in "Getting started with Raspberry Pi Pico")
-1. Build OpenOCD (Read "Appendix A: Using Picoprobe" in "Getting started with Raspberry Pi Pico")
-1. Build and flash picoprobe (Read Appedix A again)
+1. Install GDB (gdb-multiarch or arm-none-eabi-gdb)
+1. Build OpenOCD (Read Appendix A: Debugprobe in [Getting Started with the Raspberry Pi Pico-Series](https://rptl.io/pico-get-started))
+1. If you use a second Pico or Pico 2 instead of Debug Probe, install picoprobe (Read Appedix A again) to it
 1. Wire Picoprobe to another Pico (Read Appedix A again)
 1. Set environment variable `OPENOCD_PATH` to OpenOCD directory so that `$OPENOCD_PATH/src/openocd` refers `openocd` executable
 1. Run following command:
