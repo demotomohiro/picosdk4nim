@@ -159,3 +159,10 @@ You can define User-defined Commands using `define` on GDB:
 >end
 ```
 This commands can be placed on GDB's initialization file.
+
+
+## Build options
+There are build options on `src/picosdk4nim.nim`. They can be set with compiler option like `-d:option=value` or `switch` proc like `switch("define", "option=value")` on `config.nims` file.
+
+Some of build options are corresponding to CMake build configurations/functions of Raspberry Pi Pico-series C/C++ SDK.
+List of these options are explained in [Chapter 6~7 on Raspberry Pi Pico-Series C/C++ SDK](https://rptl.io/pico-c-sdk).
