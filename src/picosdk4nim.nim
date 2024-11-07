@@ -34,6 +34,15 @@ when defined(PicoDefaultUartRxPin):
     ## Set UART Rx GPIO pin number used as stdin.
   static: assert PicoDefaultUartRxPin mod 4 == 1 and PicoDefaultUartRxPin in 1 .. 29
 
+const PicoNoPicotool {.booldefine.} = false
+  ## When set to true, Pico SDK stop using picotool.
+  ## Otherwise, if picotool is not installed on your machine or Pico SDK can't find it,
+  ## Pico SDK automatically download and build picotool at build time and it takes long time.
+  ##
+  ## picotool works with RP2040/RP2350 binaries and interacts RP2040/RP2350 devices.
+  ## It is used to create UF2 file by Pico SDK.
+  ## https://github.com/raspberrypi/picotool
+
 const cmakeStmts = block:
   var res = @[initCMakeInclude($(PicoSDKPath.PathX[:fdDire, arAbso, BuildOS, true].joinFile"pico_sdk_init.cmake"), "includePicoSDK"),
               initCMakeCmd("pico_sdk_init()", "initPicoSDK", "std.project")]
@@ -56,6 +65,9 @@ const cmakeStmts = block:
     res.add initCMakeCmdWithTarget(fmt"target_compile_definitions(#target PRIVATE PICO_DEFAULT_UART_TX_PIN={PicoDefaultUartTxPin})")
   when defined(PicoDefaultUartRxPin):
     res.add initCMakeCmdWithTarget(fmt"target_compile_definitions(#target PRIVATE PICO_DEFAULT_UART_RX_PIN={PicoDefaultUartRxPin})")
+
+  when PicoNoPicotool:
+    res.add initCMakeCmd("set(PICO_NO_PICOTOOL 1)")
 
   res
 
