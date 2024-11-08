@@ -23,10 +23,17 @@ git clone https://github.com/raspberrypi/pico-sdk.git --branch master --depth 1 
           - Install binutils, gcc, new and gdb targets arm-none-eabi
     - Build or install [OpenOCD](https://github.com/raspberrypi/openocd) if you want to use Picoprobe or Raspberry Pi Debug Probe
         - Read Appendix A: Debugprobe in [Getting Started with the Raspberry Pi Pico-Series](https://rptl.io/pico-get-started)
+    - Install [picotool](https://github.com/raspberrypi/picotool) if you use it.
+      Pico SDK use it to create UF2 file, hash and sign binaries.
+      If picotool is not installed, Pico SDK automatically download the source and build it.
+      But it takes long time, and it is cached only for one project and it is built again when you compile other projects.
+      If you installed picotool to a custom path, define `PicotoolDir` with the path to the directory containing picotool by adding `-d:PicotoolDir=/path/to/picotool` to nim command line options or `switch("define", "PicotoolDir=/path/to/picotool")` to `config.nims`.
+      If you don't use picotool, define `PicoNoPicotool` so that Pico SDK don't build picotool.
 
 
 ## How to install
 Before installing picosdk4nim, make sure that build tools, CMake and Raspberry Pi Pico SDK are installed, and you can build example C code with `CMakeLists.txt` in https://github.com/raspberrypi/pico-sdk/blob/master/README.md
+
 
 Install using nimble:
 ```console

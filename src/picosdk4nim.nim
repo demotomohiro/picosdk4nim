@@ -43,6 +43,11 @@ const PicoNoPicotool {.booldefine.} = false
   ## It is used to create UF2 file by Pico SDK.
   ## https://github.com/raspberrypi/picotool
 
+when defined(PicotoolDir):
+  const PicotoolDir {.strdefine.}: string = ""
+    ## Set path to the directory containing picotool so that Pico SDK
+    ## can call it.
+
 const cmakeStmts = block:
   var res = @[initCMakeInclude($(PicoSDKPath.PathX[:fdDire, arAbso, BuildOS, true].joinFile"pico_sdk_init.cmake"), "includePicoSDK"),
               initCMakeCmd("pico_sdk_init()", "initPicoSDK", "std.project")]
@@ -68,6 +73,9 @@ const cmakeStmts = block:
 
   when PicoNoPicotool:
     res.add initCMakeCmd("set(PICO_NO_PICOTOOL 1)")
+
+  when defined(PicotoolDir):
+    res.add initCMakeCmd(fmt"set(picotool_DIR {PicotoolDir.cmakeStrArg})")
 
   res
 
