@@ -48,8 +48,39 @@ when defined(PicotoolDir):
     ## Set path to the directory containing picotool so that Pico SDK
     ## can call it.
 
+const PicoBoard {.strdefine.}: string = ""
+  ## Board name being built for.
+  ##
+  ## When you add, remove or change this parameter, delete Nim cache directory,
+  ## otherwise it causes cmake error or C files are compiled with wrong compile options.
+  ##
+  ## This is corresponding to `PICO_BOARD` configuration variable.
+  ## Fore more info:
+  ## "6.2. Platform and Board Configuration" in "Raspberry Pi Pico-Series C/C++ SDK" in https://rptl.io/pico-c-sdk
+  ##
+  ## - "pico": Raspberry Pi Pico
+  ## - "pico2": Raspberry Pi Pico 2
+  ## - "pico_w": Raspberry Pi Pico W
+  ##
+  ## If you use other boards supported by Pico SDK, use the board name in the header file name in:
+  ## https://github.com/raspberrypi/pico-sdk/tree/master/src/boards/include/boards
+
+const PicoPlatform {.strdefine.}: string = ""
+  ## Platform to build for.
+  ##
+  ## When you add, remove or change this parameter, delete Nim cache directory,
+  ## otherwise it causes cmake error or C files are compiled with wrong compile options.
+  ##
+  ## This is corresponding to `PICO_PLATFORM` configuration variable.
+  ## Fore more info:
+  ## "6.2. Platform and Board Configuration" in "Raspberry Pi Pico-Series C/C++ SDK" in https://rptl.io/pico-c-sdk
+  ##
+  ## - "rp2040": RP2040
+  ## - "rp2350-arm-s": RP2350 on Arm processors
+  ## - "rp2350-riscv": RP2350 on RISC-V processors
+
 const cmakeStmts = block:
-  var res = @[initCMakeInclude($(PicoSDKPath.PathX[:fdDire, arAbso, BuildOS, true].joinFile"pico_sdk_init.cmake"), "includePicoSDK"),
+  var res = @[initCMakeInclude($(PicoSDKPath.PathX[:fdDire, arAbso, BuildOS, true].joinFile"pico_sdk_init.cmake"), "includePicoSDK", "std.topStmts"),
               initCMakeCmd("pico_sdk_init()", "initPicoSDK", "std.project")]
   when defined(PicoAddExtraOutput):
     res.add initCMakeCmdWithTarget("pico_add_extra_outputs(#target)")
@@ -76,6 +107,12 @@ const cmakeStmts = block:
 
   when defined(PicotoolDir):
     res.add initCMakeCmd(fmt"set(picotool_DIR {PicotoolDir.cmakeStrArg})")
+
+  when PicoBoard != "":
+    res.add initCMakeCmd(fmt"set(PICO_BOARD {PicoBoard.cmakeStrArg})")
+
+  when PicoPlatform != "":
+    res.add initCMakeCmd(fmt"set(PICO_PLATFORM {PicoPlatform.cmakeStrArg})")
 
   res
 
