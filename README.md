@@ -1,5 +1,5 @@
 # PicoSDK4Nim
-This is a library to write [Nim](https://nim-lang.org) code for Raspberry Pi Pico and wraps [Raspberry Pi Pico SDK](https://github.com/raspberrypi/pico-sdk).
+This is a library to write [Nim](https://nim-lang.org) code for Raspberry Pi Pico series and wraps [Raspberry Pi Pico SDK](https://github.com/raspberrypi/pico-sdk).
 
 
 ## There is already Raspberry Pi Pico SDK for Nim. Why created another tool?
@@ -90,6 +90,23 @@ Then you can compile `blink.nim` with following command:
 $ nim c -d:PicoSDKPath=/path/to/pico-sdk/ blink.nim
 ```
 You can put `-d:PicoSDKPath=/path/to/pico-sdk/` option as `switch("define", "/path/to/pico-sdk")` to `config.nims` in any directories Nim searches for `.nims` configuration files.
+
+In default, output binary is compiled for Raspberry Pi Pico board.
+If you want to run it on other boards with RP series micro controllers, set the board name to `PicoBoard` build option.
+For example:
+```console
+# Build for Raspberry Pi Pico W
+$ nim c -d:PicoBoard=pico_w blink.nim
+
+# Build for Raspberry Pi Pico 2
+$ nim c -d:PicoBoard=pico2 blink.nim
+```
+[This is a list of board names](https://github.com/raspberrypi/pico-sdk/tree/master/src/boards/include/boards)
+If you find the board name in the list, remove '.h' suffix and set it to `PicoBoard`.
+
+When you add or change PicoBoard or PicoPlatform build option, please clear the Nim cache directory before building.
+`-f` option doesn't works in this case because it doesn't delete CMake build directory in Nim cache directory.
+If you didn't delete the Nim cache directory, you will get CMake error or C code are compiled with wrong compile options.
 
 
 ## How to load and run a program on Raspberry Pi Pico
